@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Registrated members";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+</hgroup>
+
+<body>
+    <div>
+        <table>
+            <tr><td><p>Участник</p></td>
+                <td><p>Дата регистрации</p></td>
+            </tr>
+            @foreach (var r in ViewBag.RegMember)
+            {
+                <tr>
+                    <td>@r.UserProfile.UserName</td>
+                    <td>@r.DateRegistration</td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td>@Html.ActionLink("Edit", "Edit", new { id = r.Id })</td>
+                        <td>@Html.ActionLink("Delete", "Delete", new { id = r.Id })</td>
+                    }
+                </tr>
+            }
+        </table>
+        
+        @Html.ActionLink("Registrate", "RegistrateOnEvent", "Home")
+
+    </div>
+</body>
