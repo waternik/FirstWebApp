@@ -1,19 +1,24 @@
 ﻿@using FirstWebApp.Models
-@model FirstWebApp.Models.RegistratedMember
+@model RegistratedMember
 @{
     ViewBag.Title = "Редактирование записи.";
 }
 
 <hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h1>@Model.UserProfile.UserName</h1>
+    <h1>@ViewBag.Title</h1>
+    <br>
+    <h2>@Model.UserProfile.UserName</h2>
 </hgroup>
 
 <body>
-    <div>
-            @Html.EditorFor(m => m.DateRegistration)
-
-            @*@Html.ActionLink("Сохранить", "Save", "Home")*@
-
-    </div>
+    @using (Html.BeginForm("Edit", "Home", FormMethod.Post))
+    {
+        <input type="hidden" value="@Model.Id" name="RegMemberId" />
+        <table>
+            <tr><td><p>Дата регистрации</p></td>
+                <td>@Html.EditorFor(m => m.DateRegistration)</td></tr>
+            <tr><td><input type="submit" value="Сохранить" /> </td>
+                <td></td></tr>
+        </table>
+    }
 </body>

@@ -7,6 +7,8 @@ using System.Web.Mvc;
 
 namespace FirstWebApp.Controllers
 {
+    using System.Data.Entity;
+
     using WebMatrix.WebData;
 
     public class HomeController : Controller
@@ -37,11 +39,12 @@ namespace FirstWebApp.Controllers
         [Authorize()]
         public ActionResult RegistrateOnEvent()
         {
+            
             using (var db = new UsersContext())
             {
                 var userId = db.UserProfiles.First(user => user.UserName == WebSecurity.CurrentUserName).UserId;
                 if (db.RegistratedMembers.Any(regMember => regMember.UserId == userId))
-                    db.RegistratedMembers.Remove(db.RegistratedMembers.First(rm=>rm.UserId==userId));
+                    db.RegistratedMembers.Remove(db.RegistratedMembers.First(rm => rm.UserId == userId));
                 else
                 {
                     var nr = new RegistratedMember() { UserId = userId, DateRegistration = DateTime.Now };
@@ -72,6 +75,34 @@ namespace FirstWebApp.Controllers
 
                 return RedirectToAction("RegistratedMembers");
             }
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit(RegistratedMember model)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var db = new UsersContext())
+                {
+                    db.Entry(model).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+
+            return RedirectToAction("RegistratedMembers");
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Remove(int id)
+        {
+            using (var db = new UsersContext())
+            {
+                if (db.RegistratedMembers.Any(regMember => regMember.Id == id))
+                    db.RegistratedMembers.Remove(db.RegistratedMembers.First(rm => rm.Id == id));
+                db.SaveChanges();
+            }
+            return this.RedirectToAction("RegistratedMembers");
         }
 
     }

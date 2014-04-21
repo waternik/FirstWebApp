@@ -20,9 +20,10 @@
                     <td>@registratedMember.UserProfile.UserName</td>
                     <td>@registratedMember.DateRegistration</td>
 
-                    @if (User.IsInRole("Admin"))
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                     {
                         <td>@Html.ActionLink("Изменить", "Edit", new { id = registratedMember.Id })</td>
+                        <td>@Html.ActionLink("Удалить", "Remove", new { id = registratedMember.Id })</td>
                     }
                 </tr>
             }
