@@ -14,6 +14,7 @@
     @using (Html.BeginForm("Edit", "Home", FormMethod.Post))
     {
         <input type="hidden" value="@Model.Id" name="RegMemberId" />
+        <input type="hidden" value="@Model.UserId" name="UserId" />
         <table>
             <tr><td><p>Дата регистрации</p></td>
                 <td>@Html.EditorFor(m => m.DateRegistration)</td></tr>
