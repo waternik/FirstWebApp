@@ -1,94 +1,39 @@
-﻿html {
-    background-color: #e2e2e2;
-    margin: 0;
-    padding: 0;
+﻿body {
+    font-size: 13px;
+    font-family: Verdana, Arial, Helvetica, Sans-Serif;
+    background-color: #f7f7fa;
+    padding-left:40px;
 }
-
-body {
-    background-color: #fff;
-    border-top: solid 10px #000;
-    color: #333;
-    font-size: .85em;
-    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
-    margin: 0;
-    padding: 0;
-}
-
-a {
-    color: #333;
-    outline: none;
-    padding-left: 3px;
-    padding-right: 3px;
-    text-decoration: underline;
-}
-
-    a:link, a:visited,
-    a:active, a:hover {
-        color: #333;
-    }
-
-    a:hover {
-        background-color: #c7d1d6;
-    }
-
-header, footer, hgroup,
-nav, section {
+   
+nav{
     display: block;
 }
-
-mark {
-    background-color: #a6dbed;
-    padding-left: 5px;
-    padding-right: 5px;
+   
+.menu {
+    padding-left:10px;
 }
-
-.float-left {
-    float: left;
+.menu ul {
+    list-style:none;
 }
-
-.float-right {
-    float: right;
+.menu li {
+    display:inline;
 }
-
-.clear-fix:after {
-    content: ".";
-    clear: both;
-    display: block;
-    height: 0;
-    visibility: hidden;
+.menu a:hover {
+    color:red;
 }
-
-h1, h2, h3,
-h4, h5, h6 {
-    color: #000;
-    margin-bottom: 0;
-    padding-bottom: 0;
+table {
+   vertical-align:middle;
+   text-align:left; 
+ }
+.header {
+    font-weight:bold;
 }
-
-h1 {
-    font-size: 2em;
+ td {
+    padding-right:10px;
+ }
+input {
+    width: 150px;
 }
-
-h2 {
-    font-size: 1.75em;
-}
-
-h3 {
-    font-size: 1.2em;
-}
-
-h4 {
-    font-size: 1.1em;
-}
-
-h5, h6 {
-    font-size: 1em;
-}
-
-    h5 a:link, h5 a:visited, h5 a:active {
-        padding: 0;
-        text-decoration: none;
-    }
 
 
 /* main layout
@@ -105,9 +50,10 @@ h5, h6 {
 }
 
     .main-content {
-        background: url("../Images/accent.png") no-repeat;
-        padding-left: 10px;
-        padding-top: 30px;
+    font-size: 13px;
+    font-family: Verdana, Arial, Helvetica, Sans-Serif;
+    background-color: #7ac0da;
+    padding-left:40px;
     }
 
     .featured + .main-content {

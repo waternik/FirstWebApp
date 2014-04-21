@@ -1,0 +1,19 @@
+﻿@using FirstWebApp.Models
+@model FirstWebApp.Models.RegistratedMember
+@{
+    ViewBag.Title = "Редактирование записи.";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h1>@Model.UserProfile.UserName</h1>
+</hgroup>
+
+<body>
+    <div>
+            @Html.EditorFor(m => m.DateRegistration)
+
+            @*@Html.ActionLink("Сохранить", "Save", "Home")*@
+
+    </div>
+</body>

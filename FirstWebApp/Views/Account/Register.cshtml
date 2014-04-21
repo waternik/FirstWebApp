@@ -1,11 +1,10 @@
 ﻿@model FirstWebApp.Models.RegisterModel
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Регистрация";
 }
 
 <hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>Create a new account.</h2>
+    <h2>Регистрация нового пользователя.</h2>
 </hgroup>
 
 @using (Html.BeginForm()) {
@@ -28,8 +27,7 @@
                 @Html.PasswordFor(m => m.ConfirmPassword)
             </li>
         </ol>
-        <input type="submit" value="Register" />
-        <input id="Radio1" type="radio" />
+        <input type="submit" value="Зарегистрировать" />
     </fieldset>
 }
 

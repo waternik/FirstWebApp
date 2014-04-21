@@ -1,5 +1,6 @@
-﻿@{
-    ViewBag.Title = "Registrated members";
+﻿@model List<FirstWebApp.Models.RegistratedMember>
+@{
+    ViewBag.Title = "Участники соревнования";
 }
 
 <hgroup class="title">
@@ -12,21 +13,22 @@
             <tr><td><p>Участник</p></td>
                 <td><p>Дата регистрации</p></td>
             </tr>
-            @foreach (var r in ViewBag.RegMember)
+           
+            @foreach (var registratedMember in @Model)
             {
                 <tr>
-                    <td>@r.UserProfile.UserName</td>
-                    <td>@r.DateRegistration</td>
+                    <td>@registratedMember.UserProfile.UserName</td>
+                    <td>@registratedMember.DateRegistration</td>
+
                     @if (User.IsInRole("Admin"))
                     {
-                        <td>@Html.ActionLink("Edit", "Edit", new { id = r.Id })</td>
-                        <td>@Html.ActionLink("Delete", "Delete", new { id = r.Id })</td>
+                        <td>@Html.ActionLink("Изменить", "Edit", new { id = registratedMember.Id })</td>
                     }
                 </tr>
             }
-        </table>
-        
-        @Html.ActionLink("Registrate", "RegistrateOnEvent", "Home")
+
+        </table><br>
+        @Html.ActionLink("Принять участие\\Отказаться", "RegistrateOnEvent", "Home")
 
     </div>
 </body>

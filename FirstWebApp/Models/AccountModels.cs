@@ -8,12 +8,9 @@ using System.Web.Security;
 
 namespace FirstWebApp.Models
 {
-    using System.Data.Entity.Core.Objects.DataClasses;
-
     public class UsersContext : DbContext
     {
-        public UsersContext()
-            : base("DefaultConnection")
+        public UsersContext() : base("DefaultConnection")
         {
         }
 
@@ -47,7 +44,7 @@ namespace FirstWebApp.Models
     public class RegisterExternalLoginModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "Имя пользователя")]
         public string UserName { get; set; }
 
         public string ExternalLoginData { get; set; }
@@ -57,51 +54,51 @@ namespace FirstWebApp.Models
     {
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [Display(Name = "Текущий пароль")]
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 3)]
+        [StringLength(100, ErrorMessage = "Пароль должен содержать не менее {2} символов.", MinimumLength = 3)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "Новый пароль")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "Повторите новый пароль")]
+        [Compare("NewPassword", ErrorMessage = "Пароли не сопадают, повторите пожалуйста ввод.")]
         public string ConfirmPassword { get; set; }
     }
 
     public class LoginModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "Имя пользователя")]
         public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Пароль")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Запомнить меня?")]
         public bool RememberMe { get; set; }
     }
 
     public class RegisterModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "Имя пользователя")]
         public string UserName { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Пароль должен содержать не менее {2} символов.", MinimumLength = 3)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Новый пароль")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Повторите новый пароль")]
+        [Compare("Password", ErrorMessage = "Пароли не сопадают, повторите пожалуйста ввод.")]
         public string ConfirmPassword { get; set; }
     }
 

@@ -11,35 +11,27 @@ namespace FirstWebApp.Controllers
 
     public class HomeController : Controller
     {
-        public ActionResult Index()
-        {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
-            return View();
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your app description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
         public ActionResult RegistratedMembers()
         {
+
             ViewBag.Message = "Registrated members";
-            var uc = new UsersContext();
-            IEnumerable<RegistratedMember> registratedMembers = uc.RegistratedMembers;
-            ViewBag.UC = uc;
-            ViewBag.RegMember = registratedMembers;
-            return View();
+            var registratedMembersList = new List<RegistratedMember>();
+            using (var uc = new UsersContext())
+            {
+                foreach (var rm in uc.RegistratedMembers)
+                {
+                    var user = new UserProfile() { UserId = rm.UserProfile.UserId, UserName = rm.UserProfile.UserName };
+                    var regUser = new RegistratedMember()
+                    {
+                        DateRegistration = rm.DateRegistration,
+                        Id = rm.Id,
+                        UserId = user.UserId,
+                        UserProfile = user
+                    };
+                    registratedMembersList.Add(regUser);
+                }
+            }
+            return View(registratedMembersList);
         }
 
         [Authorize()]
@@ -49,13 +41,37 @@ namespace FirstWebApp.Controllers
             {
                 var userId = db.UserProfiles.First(user => user.UserName == WebSecurity.CurrentUserName).UserId;
                 if (db.RegistratedMembers.Any(regMember => regMember.UserId == userId))
-                    return this.RedirectToAction("RegistratedMembers");
-
-                var nr = new RegistratedMember() { UserId = userId, DateRegistration = DateTime.Now };
-                db.RegistratedMembers.Add(nr);
+                    db.RegistratedMembers.Remove(db.RegistratedMembers.First(rm=>rm.UserId==userId));
+                else
+                {
+                    var nr = new RegistratedMember() { UserId = userId, DateRegistration = DateTime.Now };
+                    db.RegistratedMembers.Add(nr);
+                }
                 db.SaveChanges();
             }
             return this.RedirectToAction("RegistratedMembers");
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit(int id)
+        {
+            using (var db = new UsersContext())
+            {
+                RegistratedMember regMember = db.RegistratedMembers.First(rm => rm.Id == id);
+                if (regMember != null)
+                {
+                    var model = new RegistratedMember()
+                    {
+                        UserId = regMember.UserId,
+                        UserProfile = regMember.UserProfile,
+                        DateRegistration = regMember.DateRegistration,
+                        Id = regMember.Id
+                    };
+                    return View(model);
+                }
+
+                return RedirectToAction("RegistratedMembers");
+            }
         }
 
     }
