@@ -12,9 +12,9 @@ using System.Web;
 namespace FirstWebApp.Controllers
 {
     [Culture]
-    public class HomeController : Controller
+    public partial class HomeController : Controller
     {
-        public ActionResult ChangeCulture(string lang)
+        public virtual ActionResult ChangeCulture(string lang)
         {
             var cultures = new List<string>() { "ru", "en"};
             if (!cultures.Contains(lang))
@@ -34,12 +34,12 @@ namespace FirstWebApp.Controllers
                              };
             Response.Cookies.Add(cookie);
             if(Request.UrlReferrer == null)
-                return RedirectToAction("RegistratedMembers");
+                return RedirectToAction(MVC.Home.AllRegistratedOnGameUsers());
 
             return Redirect(this.Request.UrlReferrer.AbsolutePath);
         }
 
-        public ActionResult RegistratedMembers()
+        public virtual ActionResult AllRegistratedOnGameUsers()
         {
 
             ViewBag.Message = "Registrated members";
@@ -63,7 +63,7 @@ namespace FirstWebApp.Controllers
         }
 
         [Authorize()]
-        public ActionResult RegistrateOnEvent()
+        public virtual ActionResult RegistrateCurrentUserOnGame()
         {
             
             using (var db = new UsersContext())
@@ -78,34 +78,33 @@ namespace FirstWebApp.Controllers
                 }
                 db.SaveChanges();
             }
-            return this.RedirectToAction("RegistratedMembers");
+            return this.RedirectToAction(MVC.Home.AllRegistratedOnGameUsers());
         }
 
         [Authorize(Roles = "Admin")]
-        public ActionResult Edit(int id)
+        public virtual ActionResult EditInfoAboutRegistratedUser(int id)
         {
             using (var db = new UsersContext())
             {
-                RegistratedMember regMember = db.RegistratedMembers.First(rm => rm.Id == id);
-                if (regMember != null)
-                {
-                    var model = new RegistratedMember()
-                    {
-                        UserId = regMember.UserId,
-                        UserProfile = regMember.UserProfile,
-                        DateRegistration = regMember.DateRegistration,
-                        Id = regMember.Id
-                    };
-                    return View(model);
-                }
+                if (!db.RegistratedMembers.Any(rm => rm.Id == id))
+                    return this.RedirectToAction(MVC.Home.AllRegistratedOnGameUsers());
 
-                return RedirectToAction("RegistratedMembers");
+
+                var regMember = db.RegistratedMembers.First(rm => rm.Id == id);
+                var model = new RegistratedMember()
+                                {
+                                    UserId = regMember.UserId,
+                                    UserProfile = regMember.UserProfile,
+                                    DateRegistration = regMember.DateRegistration,
+                                    Id = regMember.Id
+                                };
+                return this.View(model);
             }
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult Edit(RegistratedMember model)
+        public virtual ActionResult EditInfoAboutRegistratedUser(RegistratedMember model)
         {
             if (ModelState.IsValid)
             {
@@ -116,11 +115,11 @@ namespace FirstWebApp.Controllers
                 }
             }
 
-            return RedirectToAction("RegistratedMembers");
+            return RedirectToAction(MVC.Home.AllRegistratedOnGameUsers());
         }
 
         [Authorize(Roles = "Admin")]
-        public ActionResult Remove(int id)
+        public virtual ActionResult RemoveRegistratedUser(int id)
         {
             using (var db = new UsersContext())
             {
@@ -128,14 +127,14 @@ namespace FirstWebApp.Controllers
                     db.RegistratedMembers.Remove(db.RegistratedMembers.First(rm => rm.Id == id));
                 db.SaveChanges();
             }
-            return this.RedirectToAction("RegistratedMembers");
+            return this.RedirectToAction(MVC.Home.AllRegistratedOnGameUsers());
         }
 
         protected override void OnException(ExceptionContext exceptionContext)
         {
             var e = exceptionContext.Exception;
             exceptionContext.ExceptionHandled = true;
-            exceptionContext.Result = new ViewResult { ViewName = "Error" };
+            exceptionContext.Result = new ViewResult { ViewName = MVC.Shared.Views.ErrorView };
         }
 
     }

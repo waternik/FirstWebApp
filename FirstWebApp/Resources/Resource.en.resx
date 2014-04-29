@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ChooseLang" xml:space="preserve">
-    <value>Chose the language</value>
+  <data name="NameLanguage" xml:space="preserve">
+    <value>English</value>
   </data>
   <data name="RegistratedMembers" xml:space="preserve">
     <value>Registrated members</value>

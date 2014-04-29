@@ -61,11 +61,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Выберите язык.
+        ///   Looks up a localized string similar to Русский.
         /// </summary>
-        public static string ChooseLang {
+        public static string NameLanguage {
             get {
-                return ResourceManager.GetString("ChooseLang", resourceCulture);
+                return ResourceManager.GetString("NameLanguage", resourceCulture);
             }
         }
         

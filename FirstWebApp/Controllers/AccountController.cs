@@ -17,13 +17,13 @@ namespace FirstWebApp.Controllers
 {
     [Authorize]
     [InitializeSimpleMembership]
-    public class AccountController : Controller
+    public partial class AccountController : Controller
     {
         //
         // GET: /Account/Login
 
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public virtual ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
@@ -35,7 +35,7 @@ namespace FirstWebApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model, string returnUrl)
+        public virtual ActionResult Login(LoginModel model, string returnUrl)
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName
                 , model.Password
@@ -54,18 +54,18 @@ namespace FirstWebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LogOff()
+        public virtual ActionResult LogOff()
         {
             WebSecurity.Logout();
 
-            return RedirectToAction("RegistratedMembers", "Home");
+            return RedirectToAction(MVC.Home.AllRegistratedOnGameUsers());
         }
 
         //
         // GET: /Account/Register
 
         [AllowAnonymous]
-        public ActionResult Register()
+        public virtual ActionResult Register()
         {
             return View();
         }
@@ -76,7 +76,7 @@ namespace FirstWebApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model)
+        public virtual ActionResult Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace FirstWebApp.Controllers
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     WebSecurity.Login(model.UserName, model.Password);
-                    return RedirectToAction("RegistratedMembers", "Home");
+                    return RedirectToAction(MVC.Home.AllRegistratedOnGameUsers());
                 }
                 catch (MembershipCreateUserException e)
                 {
@@ -97,14 +97,14 @@ namespace FirstWebApp.Controllers
             return View(model);
         }
 
-        public ActionResult Manage(ManageMessageId? message)
+        public virtual ActionResult Manage(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
                 : "";
-            ViewBag.ReturnUrl = Url.Action("Manage");
+            ViewBag.ReturnUrl = Url.Action(MVC.Account.Manage());
             return View();
         }
 
@@ -113,9 +113,9 @@ namespace FirstWebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Manage(LocalPasswordModel model)
+        public virtual ActionResult Manage(LocalPasswordModel model)
         {
-            ViewBag.ReturnUrl = Url.Action("Manage");
+            ViewBag.ReturnUrl = Url.Action(MVC.Account.Manage());
             // ChangePassword will throw an exception rather than return false in certain failure scenarios.
             bool changePasswordSucceeded;
             try
@@ -130,7 +130,8 @@ namespace FirstWebApp.Controllers
 
             if (changePasswordSucceeded)
             {
-                return RedirectToAction("Manage", new {Message = ManageMessageId.ChangePasswordSuccess});
+                ViewBag.StatusMessage = ManageMessageId.ChangePasswordSuccess;
+                return RedirectToAction(MVC.Account.Manage());
             }
 
             ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
@@ -148,7 +149,7 @@ namespace FirstWebApp.Controllers
             }
             else
             {
-                return RedirectToAction("RegistratedMembers", "Home");
+                return RedirectToAction(MVC.Home.AllRegistratedOnGameUsers());
             }
         }
 
@@ -164,7 +165,7 @@ namespace FirstWebApp.Controllers
             var e = exceptionContext.Exception;
             exceptionContext.ExceptionHandled = true;
             exceptionContext.Result = new ViewResult
-            {ViewName = "Error"};
+            {ViewName = MVC.Shared.Views.ErrorView};
         }
         
         private static string ErrorCodeToString(MembershipCreateStatus createStatus)

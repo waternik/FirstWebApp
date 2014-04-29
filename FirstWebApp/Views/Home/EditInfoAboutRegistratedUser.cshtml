@@ -11,7 +11,7 @@
 </hgroup>
 
 <body>
-    @using (Html.BeginForm("Edit", "Home", FormMethod.Post))
+    @using (Html.BeginForm(MVC.Home.EditInfoAboutRegistratedUser(), FormMethod.Post))
     {
         <input type="hidden" value="@Model.Id" name="RegMemberId" />
         <input type="hidden" value="@Model.UserId" name="UserId" />

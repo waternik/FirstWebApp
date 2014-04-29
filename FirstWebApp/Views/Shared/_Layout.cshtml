@@ -1,5 +1,6 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using FirstWebApp.Controllers
+<!DOCTYPE html>
+<html>
     <head>
         <meta charset="utf-8" />
         <title>@ViewBag.Title - My First APP</title>
@@ -12,21 +13,23 @@
         <header>
             <div class="content-wrapper">
                 <div>
-                     @using (Html.BeginForm("ChangeCulture", "Home")){ 
+                    @using (Html.BeginForm(MVC.Home.ChangeCulture(), FormMethod.Post))
+                    {
                         <select name="lang">
-                            <option disabled selected>@Resources.Resource.ChooseLang</option>
+                            <option >@Resources.Resource.NameLanguage</option>
                             <option value="ru">Русский</option>
                             <option value="en">English</option>
                         </select>
-                    <input type="submit" name="submit" value="@Resources.Resource.SetLanguage">
+                        <button type="submit" name="submit">@Resources.Resource.SetLanguage</button>
                     }
+                    
                 </div>
                 <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("Супер-пупер соревнование", "RegistratedMembers", "Home")</p>
+                    <p class="site-title">@Html.ActionLink("Супер-пупер соревнование", MVC.Home.AllRegistratedOnGameUsers())</p>
                 </div>
                 <div class="float-right">
                     <section id="login">
-                        @Html.Partial("_LoginPartial")
+                        @Html.Partial(MVC.Shared.Views._LoginPartial)
                     </section>
                 </div>
             </div>
