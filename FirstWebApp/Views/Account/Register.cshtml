@@ -1,4 +1,5 @@
-﻿@model FirstWebApp.Models.RegisterModel
+﻿@using FirstWebApp.Models.ViewModel
+@model RegisterModel
 @{
     ViewBag.Title = "Регистрация";
 }
@@ -17,6 +18,10 @@
             <li>
                 @Html.LabelFor(m => m.UserName)
                 @Html.TextBoxFor(m => m.UserName)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.FullUserName)
+                @Html.TextBoxFor(m => m.FullUserName)
             </li>
             <li>
                 @Html.LabelFor(m => m.Password)

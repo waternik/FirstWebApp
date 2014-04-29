@@ -1,4 +1,5 @@
-﻿@model FirstWebApp.Models.LocalPasswordModel
+﻿@using FirstWebApp.Models.ViewModel
+@model LocalPasswordModel
 @{
     ViewBag.Title = "Управление акаунтом";
 }
@@ -11,21 +12,7 @@
 
 <p>Вы авторзованны как <strong>@User.Identity.Name</strong>.</p>
 
-@if (ViewBag.HasLocalPassword)
-{
-    @Html.Partial("_ChangePasswordPartial")
-}
-else
-{ 
-    @Html.Partial("_SetPasswordPartial")
-}
-
-<section id="externalLogins">
-    @Html.Action("RemoveExternalLogins")
-
-    <h3>Add an external login</h3>
-    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-</section>
+@Html.Partial("_ChangePasswordPartial")
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

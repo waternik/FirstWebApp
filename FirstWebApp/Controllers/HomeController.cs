@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Data.Entity;
 using FirstWebApp.Filters;
+using FirstWebApp.Models.DBModels;
 using WebMatrix.WebData;
 using System.Web;
 
@@ -15,7 +16,7 @@ namespace FirstWebApp.Controllers
     {
         public ActionResult ChangeCulture(string lang)
         {
-            var cultures = new List<string>() { "ru", "en", "de" };
+            var cultures = new List<string>() { "ru", "en"};
             if (!cultures.Contains(lang))
             {
                 lang = "ru";
@@ -47,7 +48,7 @@ namespace FirstWebApp.Controllers
             {
                 foreach (var rm in uc.RegistratedMembers)
                 {
-                    var user = new UserProfile() { UserId = rm.UserProfile.UserId, UserName = rm.UserProfile.UserName };
+                    var user = new UserProfile() { UserId = rm.UserProfile.UserId, UserName = rm.UserProfile.UserName, FullUserName = rm.UserProfile.FullUserName};
                     var regUser = new RegistratedMember()
                     {
                         DateRegistration = rm.DateRegistration,
@@ -128,6 +129,13 @@ namespace FirstWebApp.Controllers
                 db.SaveChanges();
             }
             return this.RedirectToAction("RegistratedMembers");
+        }
+
+        protected override void OnException(ExceptionContext exceptionContext)
+        {
+            var e = exceptionContext.Exception;
+            exceptionContext.ExceptionHandled = true;
+            exceptionContext.Result = new ViewResult { ViewName = "Error" };
         }
 
     }
