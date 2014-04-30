@@ -60,8 +60,8 @@
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Interfaces\IRegistratedMember.cs" />
     <Compile Include="Interfaces\IUserProfile.cs" />
-    <Compile Include="Models\Copy of RegistratedMemberDTO.cs" />
-    <Compile Include="Models\Copy of UserProfileDTO.cs" />
+    <Compile Include="Models\RegistratedMemberDTO.cs" />
+    <Compile Include="Models\UserProfileDTO.cs" />
     <Compile Include="Models\RegistratedMember.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="MyDBContext.cs" />
