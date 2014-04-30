@@ -1,0 +1,25 @@
+﻿@using FirstWebApp.Repository.Models
+@model RegistratedMember
+@{
+    ViewBag.Title = "Редактирование записи.";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+    <br>
+    <h2>@Model.UserProfile.UserName</h2>
+</hgroup>
+
+<body>
+    @using (Html.BeginForm(MVC.Home.EditInfoAboutRegistratedUser(), FormMethod.Post))
+    {
+        <input type="hidden" value="@Model.Id" name="RegMemberId" />
+        <input type="hidden" value="@Model.UserId" name="UserId" />
+        <table>
+            <tr><td><p>Дата регистрации</p></td>
+                <td>@Html.EditorFor(m => m.DateRegistration)</td></tr>
+            <tr><td><input type="submit" value="Сохранить" /> </td>
+                <td></td></tr>
+        </table>
+    }
+</body>
