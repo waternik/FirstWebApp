@@ -18,7 +18,7 @@
             @foreach (var registratedMember in @Model)
             {
                 <tr>
-                    <td>@registratedMember.UserProfile.UserName</td>
+                    <td>@registratedMember.UserProfile.FullUserName</td>
                     <td>@registratedMember.DateRegistration</td>
 
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))

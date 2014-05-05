@@ -18,6 +18,8 @@
         <table>
             <tr><td><p>Дата регистрации</p></td>
                 <td>@Html.EditorFor(m => m.DateRegistration)</td></tr>
+            <tr><td><p>Имя пользователя</p></td>
+                <td>@Html.EditorFor(m => m.UserProfile.FullUserName)</td></tr>
             <tr><td><input type="submit" value="Сохранить" /> </td>
                 <td></td></tr>
         </table>

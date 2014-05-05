@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace FirstWebApp.WebApp.Filters
 {
@@ -19,9 +16,10 @@ namespace FirstWebApp.WebApp.Filters
 
             var cultures = new List<string>() { "ru", "en"};
             if (!cultures.Contains(curentCulture))
-            {
                 curentCulture = "ru";
-            }
+
+            filterContext.RouteData.Values["lang"] = curentCulture;
+
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(curentCulture);
             Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(curentCulture);
         }

@@ -1,26 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Transactions;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using DotNetOpenAuth.AspNet;
 using FirstWebApp.WebApp.Models.ViewModel;
-using Microsoft.Web.WebPages.OAuth;
-//using FirstWebApp.Repository.Filters;
+using FirstWebApp.Filters;
+using WebMatrix.WebData;
 
 namespace FirstWebApp.WebApp.Controllers
 {
-    
-
     [Authorize]
-    //[InitializeSimpleMembership]
-    public partial class AccountController : Controller
+    [InitializeSimpleMembership]
+    public partial class AccountController : BaseController
     {
         readonly Repository.Repository myRepository = new Repository.Repository();
-        //
-        // GET: /Account/Login
 
         [AllowAnonymous]
         public virtual ActionResult Login(string returnUrl)
@@ -29,19 +20,19 @@ namespace FirstWebApp.WebApp.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/Login
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public virtual ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && myRepository.LogIn(model.UserName
+            if (ModelState.IsValid && WebSecurity.Login(model.UserName
                 , model.Password
                 , model.RememberMe))
             {
-                return RedirectToLocal(returnUrl);
+                if (Url.IsLocalUrl(returnUrl))
+                    return Redirect(returnUrl);
+
+                return RedirectToAction(MVC.Home.AllRegistratedOnGameUsers());
             }
 
             // If we got this far, something failed, redisplay form
@@ -49,28 +40,19 @@ namespace FirstWebApp.WebApp.Controllers
             return View(model);
         }
 
-        //
-        // POST: /Account/LogOff
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual ActionResult LogOff()
         {
-            myRepository.LogOut();
+            WebSecurity.Logout();
             return RedirectToAction(MVC.Home.AllRegistratedOnGameUsers());
         }
-
-        //
-        // GET: /Account/Register
 
         [AllowAnonymous]
         public virtual ActionResult Register()
         {
             return View();
         }
-
-        //
-        // POST: /Account/Register
 
         [HttpPost]
         [AllowAnonymous]
@@ -82,7 +64,12 @@ namespace FirstWebApp.WebApp.Controllers
                 // Attempt to register the user
                 try
                 {
-                    myRepository.CreateUsers(model.UserName, model.Password);
+                    WebSecurity.CreateUserAndAccount(model.UserName
+                        , model.Password
+                        , propertyValues: new { FullUserName = model.FullUserName });
+
+                    WebSecurity.Login(model.UserName, model.Password);
+                    
                     return RedirectToAction(MVC.Home.AllRegistratedOnGameUsers());
                 }
                 catch (MembershipCreateUserException e)
@@ -106,9 +93,6 @@ namespace FirstWebApp.WebApp.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/Manage
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual ActionResult Manage(LocalPasswordModel model)
@@ -118,7 +102,7 @@ namespace FirstWebApp.WebApp.Controllers
             bool changePasswordSucceeded;
             try
             {
-                changePasswordSucceeded = myRepository.ChangePassword(User.Identity.Name, model.OldPassword,
+                changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword,
                     model.NewPassword);
             }
             catch (Exception)
@@ -139,18 +123,6 @@ namespace FirstWebApp.WebApp.Controllers
         }
 
         #region Helpers
-        private ActionResult RedirectToLocal(string returnUrl)
-        {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction(MVC.Home.AllRegistratedOnGameUsers());
-            }
-        }
-
         public enum ManageMessageId
         {
             ChangePasswordSuccess,
@@ -158,14 +130,6 @@ namespace FirstWebApp.WebApp.Controllers
             RemoveLoginSuccess,
         }
 
-        protected override void OnException(ExceptionContext exceptionContext)
-        {
-            var e = exceptionContext.Exception;
-            exceptionContext.ExceptionHandled = true;
-            exceptionContext.Result = new ViewResult
-            {ViewName = MVC.Shared.Views.ErrorView};
-        }
-        
         private static string ErrorCodeToString(MembershipCreateStatus createStatus)
         {
             // See http://go.microsoft.com/fwlink/?LinkID=177550 for

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using FirstWebApp.Repository.Models;
 
 namespace FirstWebApp.Repository
@@ -15,9 +10,8 @@ namespace FirstWebApp.Repository
         {
         }
 
-        public DbSet<UserProfileDTO> UserProfiles { get; set; }
-        public DbSet<RegistratedMemberDTO> RegistratedMembers { get; set; }
-        
+        public DbSet<UserProfileDO> UserProfiles { get; set; }
+        public DbSet<RegistratedMemberDO> RegistratedMembers { get; set; }
     }
 
     //public sealed class ConfigurationForMyDBContext : DbMigrationsConfiguration<UsersContext>

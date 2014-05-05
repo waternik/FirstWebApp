@@ -1,12 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using FirstWebApp.Repository.Interfaces;
 
 namespace FirstWebApp.Repository.Models
 {
     [Table("RegistratedMembers")]
-    public class RegistratedMemberDTO
+    public class RegistratedMemberDO
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -14,7 +13,7 @@ namespace FirstWebApp.Repository.Models
 
         [ForeignKey("UserProfile")]
         public int UserId { get; set; }
-        public virtual UserProfileDTO UserProfile { get; set; }
+        public virtual UserProfileDO UserProfile { get; set; }
 
         public DateTime DateRegistration { get; set; }
     }
