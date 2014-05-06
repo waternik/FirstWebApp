@@ -180,7 +180,6 @@
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Logger\LoggerFactory.cs" />
     <Compile Include="Models\ViewModel\LocalPasswordModel.cs" />
     <Compile Include="Models\ViewModel\LoginModel.cs" />
     <Compile Include="Models\ViewModel\RegisterModel.cs" />
