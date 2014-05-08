@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IRegistratedMember.cs" />
+    <Compile Include="Interfaces\IRepositoryRegistratedMembers.cs" />
     <Compile Include="Interfaces\IUserProfile.cs" />
     <Compile Include="Models\RegistratedMember.cs" />
     <Compile Include="Models\RegistratedMemberDO.cs" />
@@ -57,7 +58,7 @@
     <Compile Include="Models\UserProfileDO.cs" />
     <Compile Include="MyDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository.cs" />
+    <Compile Include="RepositoryRegistratedMembers.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

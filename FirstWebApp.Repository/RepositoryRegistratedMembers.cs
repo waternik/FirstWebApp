@@ -7,7 +7,7 @@ using System;
 
 namespace FirstWebApp.Repository
 {
-    public class Repository
+    public class RepositoryRegistratedMembers : IRepositoryRegistratedMembers
     {
         public List<IRegistratedMember> GetRegistratedMembers()
         {

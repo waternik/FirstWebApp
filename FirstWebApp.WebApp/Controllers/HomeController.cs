@@ -13,13 +13,10 @@ namespace FirstWebApp.WebApp.Controllers
 
     public partial class HomeController : BaseController
     {
-        readonly Repository.Repository myRepository = new Repository.Repository();
-
         public virtual ActionResult AllRegistratedOnGameUsers()
         {
-
             ViewBag.Message = "Registrated members";
-            return View(myRepository.GetRegistratedMembers());
+            return View(MyRepository.GetRegistratedMembers());
         }
 
         public virtual ActionResult ChangeCulture(string lang)
@@ -49,7 +46,7 @@ namespace FirstWebApp.WebApp.Controllers
         public virtual ActionResult RegistrateCurrentUserOnGame()
         {
 
-            myRepository.AddRegMember(WebSecurity.CurrentUserName);
+            MyRepository.AddRegMember(WebSecurity.CurrentUserName);
 
             return this.RedirectToAction(MVC.Home.AllRegistratedOnGameUsers());
         }
@@ -57,7 +54,7 @@ namespace FirstWebApp.WebApp.Controllers
         [Authorize(Roles = "Admin")]
         public virtual ActionResult EditInfoAboutRegistratedUser(int id)
         {
-            var AllMembers = myRepository.GetRegistratedMembers();
+            var AllMembers = MyRepository.GetRegistratedMembers();
             var regMember = AllMembers.FirstOrDefault(rm => rm.Id == id);
 
             if (regMember == null)
@@ -78,7 +75,7 @@ namespace FirstWebApp.WebApp.Controllers
         [Authorize(Roles = "Admin")]
         public virtual ActionResult EditInfoAboutRegistratedUser(RegistratedMember model)
         {
-            myRepository.SaveChangeRegMember(model);
+            MyRepository.SaveChangeRegMember(model);
 
             return RedirectToAction(MVC.Home.AllRegistratedOnGameUsers());
         }
@@ -86,7 +83,7 @@ namespace FirstWebApp.WebApp.Controllers
         [Authorize(Roles = "Admin")]
         public virtual ActionResult RemoveRegistratedUser(int id)
         {
-            myRepository.RemoveRegMember(id);
+            MyRepository.RemoveRegMember(id);
 
             return this.RedirectToAction(MVC.Home.AllRegistratedOnGameUsers());
         }

@@ -11,8 +11,6 @@ namespace FirstWebApp.WebApp.Controllers
     [InitializeSimpleMembership]
     public partial class AccountController : BaseController
     {
-        readonly Repository.Repository myRepository = new Repository.Repository();
-
         [AllowAnonymous]
         public virtual ActionResult Login(string returnUrl)
         {
