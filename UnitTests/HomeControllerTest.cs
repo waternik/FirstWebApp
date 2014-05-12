@@ -1,7 +1,9 @@
 ﻿using FirstWebApp.Repository.Interfaces;
+using FirstWebApp.Repository.Models;
 using FirstWebApp.WebApp.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Ninject;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -13,37 +15,23 @@ namespace UnitTests
         [TestMethod]
         public void TestAllRegistratedOnGameUsersView()
         {
-            IRepositoryRegistratedMembers rep;
-            IKernel ninjectKernel = new StandardKernel();
-            ninjectKernel.Bind<IRepositoryRegistratedMembers>().To<MyRep>();
-            var myrep = ninjectKernel.TryGet<IRepositoryRegistratedMembers>();
-            var controller = new HomeController(myrep);
+            var registratedMembersList = new List<IRegistratedMember>();
+            registratedMembersList.Add( new RegistratedMember()
+                                            {
+                                                DateRegistration = DateTime.Now,
+                                                Id= 1,
+                                                UserId = 3,
+                                                UserProfile = new UserProfile()
+                                                                  {
+                                                                      FullUserName  = "Петькин",
+                                                                      UserId = 3,
+                                                                      UserName = "user1"
+                                                                  }
+                                            });
+            var mock = new Mock<IRepositoryRegistratedMembers>();
+            mock.Setup(m => m.GetRegistratedMembers()).Returns(registratedMembersList);
+            var controller = new HomeController(mock.Object);
             var result = controller.AllRegistratedOnGameUsers() as ViewResult;
-        }
-
-        public class MyRep : IRepositoryRegistratedMembers
-        {
-            public List<IRegistratedMember> GetRegistratedMembers()
-            {
-                var registratedMembersList = new List<IRegistratedMember>();
-                
-                return registratedMembersList;
-            }
-
-            public void AddRegMember(string nameUser)
-            {
-                
-            }
-
-            public void RemoveRegMember(int id)
-            {
-                
-            }
-
-            public void SaveChangeRegMember(IRegistratedMember item)
-            {
-                
-            }
         }
     }
 }
