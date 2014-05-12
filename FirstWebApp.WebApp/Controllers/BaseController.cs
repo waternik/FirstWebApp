@@ -11,10 +11,9 @@ using FirstWebApp.Repository;
 namespace FirstWebApp.WebApp.Controllers
 {
     [Culture]
-    public class BaseController : Controller
+    public partial class BaseController : Controller
     {
-        [Inject]
-        public IRepositoryRegistratedMembers MyRepository;
+        protected IRepositoryRegistratedMembers MyRepository;
         
         public static readonly ILog log = LogManager.GetLogger(typeof(MvcApplication));
 
@@ -24,14 +23,6 @@ namespace FirstWebApp.WebApp.Controllers
             var e = exceptionContext.Exception;
             exceptionContext.ExceptionHandled = true;
             exceptionContext.Result = new ViewResult { ViewName = MVC.Shared.Views.ErrorView };
-        }
-    }
-
-    public class WeaponNinjectModule : NinjectModule
-    {
-        public override void Load()
-        {
-            this.Bind<IRepositoryRegistratedMembers>().To<RepositoryRegistratedMembers>();
         }
     }
 }

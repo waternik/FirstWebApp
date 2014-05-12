@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using FirstWebApp.WebApp.Filters;
-using FirstWebApp.Repository;
 using FirstWebApp.Repository.Models;
 using System.Web;
+using WebMatrix.WebData;
 
 namespace FirstWebApp.WebApp.Controllers
 {
-    using WebMatrix.WebData;
+    using FirstWebApp.Repository.Interfaces;
 
     public partial class HomeController : BaseController
     {
+        public HomeController(IRepositoryRegistratedMembers myRepository)
+        {
+            MyRepository = myRepository;
+        }
+
         public virtual ActionResult AllRegistratedOnGameUsers()
         {
             ViewBag.Message = "Registrated members";

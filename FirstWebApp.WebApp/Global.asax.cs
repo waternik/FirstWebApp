@@ -5,6 +5,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using log4net;
 using log4net.Config;
+using FirstWebApp.Infrastructure;
 
 namespace FirstWebApp.WebApp
 {
@@ -25,6 +26,7 @@ namespace FirstWebApp.WebApp
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            DependencyResolver.SetResolver(new NinjectDependencyResolver());
         }
     }
 }

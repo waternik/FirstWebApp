@@ -10,14 +10,23 @@
 using System;
 using System.Diagnostics;
 using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
+using System.Web.Mvc.Ajax;
+using System.Web.Mvc.Html;
 using System.Web.Routing;
+using T4MVC;
 
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 public static partial class MVC
 {
     public static FirstWebApp.WebApp.Controllers.AccountController Account = new FirstWebApp.WebApp.Controllers.T4MVC_AccountController();
+    public static FirstWebApp.WebApp.Controllers.BaseController Base = new FirstWebApp.WebApp.Controllers.T4MVC_BaseController();
     public static FirstWebApp.WebApp.Controllers.HomeController Home = new FirstWebApp.WebApp.Controllers.T4MVC_HomeController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }

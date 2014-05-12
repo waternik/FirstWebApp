@@ -7,19 +7,24 @@
 #pragma warning disable 1591
 #region T4MVC
 
+using System;
 using System.Diagnostics;
 using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
-
+using System.Web.Mvc.Ajax;
+using System.Web.Mvc.Html;
+using System.Web.Routing;
 using T4MVC;
 namespace FirstWebApp.WebApp.Controllers
 {
     public partial class HomeController
     {
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public HomeController() { }
-
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected HomeController(Dummy d) { }
 
@@ -83,8 +88,8 @@ namespace FirstWebApp.WebApp.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
-            public readonly string ChangeCulture = "ChangeCulture";
             public readonly string AllRegistratedOnGameUsers = "AllRegistratedOnGameUsers";
+            public readonly string ChangeCulture = "ChangeCulture";
             public readonly string RegistrateCurrentUserOnGame = "RegistrateCurrentUserOnGame";
             public readonly string EditInfoAboutRegistratedUser = "EditInfoAboutRegistratedUser";
             public readonly string RemoveRegistratedUser = "RemoveRegistratedUser";
@@ -93,8 +98,8 @@ namespace FirstWebApp.WebApp.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
-            public const string ChangeCulture = "ChangeCulture";
             public const string AllRegistratedOnGameUsers = "AllRegistratedOnGameUsers";
+            public const string ChangeCulture = "ChangeCulture";
             public const string RegistrateCurrentUserOnGame = "RegistrateCurrentUserOnGame";
             public const string EditInfoAboutRegistratedUser = "EditInfoAboutRegistratedUser";
             public const string RemoveRegistratedUser = "RemoveRegistratedUser";
@@ -150,6 +155,17 @@ namespace FirstWebApp.WebApp.Controllers
         public T4MVC_HomeController() : base(Dummy.Instance) { }
 
         [NonAction]
+        partial void AllRegistratedOnGameUsersOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult AllRegistratedOnGameUsers()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AllRegistratedOnGameUsers);
+            AllRegistratedOnGameUsersOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
         partial void ChangeCultureOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string lang);
 
         [NonAction]
@@ -158,17 +174,6 @@ namespace FirstWebApp.WebApp.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ChangeCulture);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "lang", lang);
             ChangeCultureOverride(callInfo, lang);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void AllRegistratedOnGameUsersOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult AllRegistratedOnGameUsers()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AllRegistratedOnGameUsers);
-            AllRegistratedOnGameUsersOverride(callInfo);
             return callInfo;
         }
 
@@ -192,6 +197,18 @@ namespace FirstWebApp.WebApp.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditInfoAboutRegistratedUser);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             EditInfoAboutRegistratedUserOverride(callInfo, id);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void EditInfoAboutRegistratedUserOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, FirstWebApp.Repository.Models.RegistratedMember model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult EditInfoAboutRegistratedUser(FirstWebApp.Repository.Models.RegistratedMember model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditInfoAboutRegistratedUser);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            EditInfoAboutRegistratedUserOverride(callInfo, model);
             return callInfo;
         }
 
